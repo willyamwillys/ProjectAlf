@@ -21,16 +21,16 @@ from userbot import CMD_HELP, bot
 from userbot.events import register
 
 # ====================== CONSTANT ===============================
-INVALID_MEDIA = "```The extension of the media entity is invalid.```"
-PP_CHANGED = "```Profile picture changed successfully.```"
-PP_TOO_SMOL = "```This image is too small, use a bigger image.```"
+INVALID_MEDIA = "```Ekstensi entitas media tidak valid.```"
+PP_CHANGED = "```Gambar profil berhasil diubah.```"
+PP_TOO_SMOL = "```Gambar ini terlalu kecil, gunakan gambar yang lebih besar.```"
 PP_ERROR = "```Failure occured while processing image.```"
 
-BIO_SUCCESS = "```Successfully edited Bio.```"
+BIO_SUCCESS = "```Bio berhasil diedit.```"
 
-NAME_OK = "```Your name was succesfully changed.```"
-USERNAME_SUCCESS = "```Your username was succesfully changed.```"
-USERNAME_TAKEN = "```This username is already taken.```"
+NAME_OK = "```Nama Anda berhasil diubah.```"
+USERNAME_SUCCESS = "```Nama pengguna Anda berhasil diubah.```"
+USERNAME_TAKEN = "```Nama pengguna ini sudah dipakai.```"
 # ===============================================================
 
 
@@ -164,24 +164,24 @@ async def remove_profilepic(delpfp):
             )
         )
     await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await delpfp.edit(f"`Successfully deleted {len(input_photos)} profile picture(s).`")
+    await delpfp.edit(f"`Berhasil dihapus {len(input_photos)} gambar profil(s).`")
 
 
 CMD_HELP.update(
     {
         "profile": ">`.username <new_username>`"
-        "\nUsage: Changes your Telegram username."
+        "\nUsage: Ubah nama pengguna Telegram Anda."
         "\n\n>`.name <firstname>` or >`.name <firstname> <lastname>`"
-        "\nUsage: Changes your Telegram name.(First and last name will get split by the first space)"
+        "\nUsage: Ubah nama Telegram Anda. (Nama depan dan belakang akan dipisahkan oleh spasi pertama)"
         "\n\n>`.setpfp`"
-        "\nUsage: Reply with .setpfp to an image to change your Telegram profie picture."
+        "\nUsage: Balas dengan .setpfp ke gambar untuk mengubah gambar profil Telegram Anda."
         "\n\n>`.setbio <new_bio>`"
-        "\nUsage: Changes your Telegram bio."
+        "\nUsage: Mengubah bio Telegram Anda."
         "\n\n>`.delpfp` or >`.delpfp <number>/<all>`"
-        "\nUsage: Deletes your Telegram profile picture(s)."
+        "\nUsage: Menghapus gambar profil Telegram Anda(s)."
         "\n\n>`.reserved`"
-        "\nUsage: Shows usernames reserved by you."
+        "\nUsage: Menampilkan nama pengguna yang dipesan oleh Anda."
         "\n\n>`.count`"
-        "\nUsage: Counts your groups, chats, bots etc..."
+        "\nUsage: Menghitung grup, obrolan, bot, dll..."
     }
 )
