@@ -90,8 +90,8 @@ async def permitpm(event):
 
             if COUNT_PM[event.chat_id] > 4:
                 await event.respond(
-                    "`You were spamming my Mastor's PM, which I didn't like.`\n"
-                    "`You have been BLOCKED and reported as SPAM, until further notice.`"
+                    "`Anda melakukan spamming pada PM Master saya, yang tidak saya sukai.`\n"
+                    "`Anda telah DIBLOKIR dan dilaporkan sebagai SPAM, sampai pemberitahuan lebih lanjut.`"
                 )
 
                 try:
@@ -101,7 +101,7 @@ async def permitpm(event):
                     if BOTLOG:
                         await event.client.send_message(
                             BOTLOG_CHATID,
-                            "Count PM is seemingly going retard, plis restart bot!",
+                            "Hitung PM tampaknya akan terbelakang, silakan restart bot!",
                         )
                     return LOGS.info("CountPM wen't rarted boi")
 
@@ -118,7 +118,7 @@ async def permitpm(event):
                         + "](tg://user?id="
                         + str(event.chat_id)
                         + ")"
-                        + " was just another retarded nibba",
+                        + " Telah di blokir",
                     )
 
 
@@ -178,7 +178,7 @@ async def notifoff(noff_event):
     except AttributeError:
         return await noff_event.edit("`Running on Non-SQL mode!`")
     addgvar("NOTIF_OFF", True)
-    await noff_event.edit("`Notifications from unapproved PM's are silenced!`")
+    await noff_event.edit("`Pemberitahuan dari PM yang tidak disetujui dibungkam!`")
 
 
 @register(outgoing=True, pattern=r"^\.notifon$")
@@ -186,9 +186,9 @@ async def notifon(non_event):
     try:
         from userbot.modules.sql_helper.globals import delgvar
     except AttributeError:
-        return await non_event.edit("`Running on Non-SQL mode!`")
+        return await non_event.edit("`Berjalan pada mode Non-SQL!`")
     delgvar("NOTIF_OFF")
-    await non_event.edit("`Notifications from unapproved PM's unmuted!`")
+    await non_event.edit("`Notifikasi dari PM yang tidak disetujui disuarakan!`")
 
 
 @register(outgoing=True, pattern=r"^\.approve$")
@@ -197,7 +197,7 @@ async def approvepm(apprvpm):
         from userbot.modules.sql_helper.globals import gvarstatus
         from userbot.modules.sql_helper.pm_permit_sql import approve
     except AttributeError:
-        return await apprvpm.edit("`Running on Non-SQL mode!`")
+        return await apprvpm.edit("`Berjalan pada mode Non-SQL!`")
 
     if apprvpm.reply_to_msg_id:
         reply = await apprvpm.get_reply_message()
@@ -226,9 +226,9 @@ async def approvepm(apprvpm):
     try:
         approve(uid)
     except IntegrityError:
-        return await apprvpm.edit("`User may already be approved.`")
+        return await apprvpm.edit("`Pengguna mungkin sudah disetujui.`")
 
-    await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `approved to PM!`")
+    await apprvpm.edit(f"[{name0}](tg://user?id={uid}) `disetujui untuk PM!`")
 
     if BOTLOG:
         await apprvpm.client.send_message(
@@ -256,14 +256,14 @@ async def disapprovepm(disapprvpm):
         name0 = str(aname.first_name)
 
     await disapprvpm.edit(
-        f"[{name0}](tg://user?id={disapprvpm.chat_id}) `Disaproved to PM!`"
+        f"[{name0}](tg://user?id={disapprvpm.chat_id}) `Tidak disetujui untuk PM!`"
     )
 
     if BOTLOG:
         await disapprvpm.client.send_message(
             BOTLOG_CHATID,
             f"[{name0}](tg://user?id={disapprvpm.chat_id})"
-            " was disapproved to PM you.",
+            " tidak disetujui untuk PM Anda.",
         )
 
 
@@ -275,12 +275,12 @@ async def blockpm(block):
         aname = replied_user.id
         name0 = str(replied_user.first_name)
         await block.client(BlockRequest(aname))
-        await block.edit("`You've been blocked!`")
+        await block.edit("`Anda telah diblokir!`")
         uid = replied_user.id
     else:
         await block.client(BlockRequest(block.chat_id))
         aname = await block.client.get_entity(block.chat_id)
-        await block.edit("`You've been blocked! \n bye....`")
+        await block.edit("`Anda telah diblokir! \n bye....`")
         name0 = str(aname.first_name)
         uid = block.chat_id
 
@@ -305,7 +305,7 @@ async def unblockpm(unblock):
         replied_user = await unblock.client.get_entity(reply.from_id)
         name0 = str(replied_user.first_name)
         await unblock.client(UnblockRequest(replied_user.id))
-        await unblock.edit("`You have been unblocked.`")
+        await unblock.edit("`Anda telah dibebaskan.`")
 
     if BOTLOG:
         await unblock.client.send_message(
@@ -318,11 +318,11 @@ async def unblockpm(unblock):
 async def add_pmsg(cust_msg):
     """Set your own Unapproved message"""
     if not PM_AUTO_BAN:
-        return await cust_msg.edit("You need to set `PM_AUTO_BAN` to `True`")
+        return await cust_msg.edit("Anda perlu mengatur `PM_AUTO_BAN` to `True`")
     try:
         import userbot.modules.sql_helper.globals as sql
     except AttributeError:
-        await cust_msg.edit("`Running on Non-SQL mode!`")
+        await cust_msg.edit("`Berjalan pada mode Non-SQL!`")
         return
 
     await cust_msg.edit("Processing...")
@@ -346,56 +346,56 @@ async def add_pmsg(cust_msg):
             msg = message.message  # get the plain text
             sql.addgvar("unapproved_msg", msg)
         else:
-            return await cust_msg.edit("`Reply to a message`")
+            return await cust_msg.edit("`Balas pesan`")
 
-        await cust_msg.edit("`Message saved as unapproved message`")
+        await cust_msg.edit("`Pesan disimpan sebagai pesan yang tidak disetujui`")
 
         if BOTLOG:
             await cust_msg.client.send_message(
-                BOTLOG_CHATID, f"***{status} Unapproved message :*** \n\n{msg}"
+                BOTLOG_CHATID, f"***{status} Pesan tidak disetujui :*** \n\n{msg}"
             )
 
     if conf.lower() == "reset":
         if custom_message is not None:
             sql.delgvar("unapproved_msg")
-            await cust_msg.edit("`Unapproved message reset to default`")
+            await cust_msg.edit("`Pesan yang tidak disetujui disetel ulang ke default`")
         else:
-            await cust_msg.edit("`You haven't set a custom message yet`")
+            await cust_msg.edit("`Anda belum menyetel pesan khusus`")
 
     if conf.lower() == "get":
         if custom_message is not None:
             await cust_msg.edit(
-                "***This is your current unapproved message:***" f"\n\n{custom_message}"
+                "***Ini adalah pesan Anda yang belum disetujui:***" f"\n\n{custom_message}"
             )
         else:
             await cust_msg.edit(
-                "*You Have not set unapproved message yet*\n"
-                f"Using default message: \n\n`{DEF_UNAPPROVED_MSG}`"
+                "*Anda belum menyetel pesan yang tidak disetujui*\n"
+                f"Menggunakan pesan default: \n\n`{DEF_UNAPPROVED_MSG}`"
             )
 
 
 CMD_HELP.update(
     {
         "pmpermit": ">`.approve`"
-        "\nUsage: Approves the mentioned/replied person to PM."
+        "\nUsage: Menyetujui orang yang disebutkan / menjawab PM."
         "\n\n>`.disapprove`"
-        "\nUsage: Disapproves the mentioned/replied person to PM."
+        "\nUsage: Menolak orang yang disebutkan / membalas PM."
         "\n\n>`.block`"
-        "\nUsage: Blocks the person."
+        "\nUsage: Blokir orang tersebut."
         "\n\n>`.unblock`"
-        "\nUsage: Unblocks the person so they can PM you."
+        "\nUsage: Batalkan pemblokiran orang tersebut agar mereka dapat PM Anda."
         "\n\n>`.notifoff`"
-        "\nUsage: Clears/Disables any notifications of unapproved PMs."
+        "\nUsage: Menghapus / Menonaktifkan pemberitahuan apa pun dari PM yang tidak disetujui."
         "\n\n>`.notifon`"
-        "\nUsage: Allows notifications for unapproved PMs."
+        "\nUsage: Izinkan pemberitahuan untuk PM yang tidak disetujui."
         "\n\n>`.set pm_msg` <reply to msg>"
-        "\nUsage: Set your own Unapproved message"
+        "\nUsage: Setel pesan Anda yang Belum Disetujui"
         "\n\n>`.get pm_msg`"
-        "\nUsage: Get your current Unapproved message"
+        "\nUsage: Dapatkan Anda menghapus pesan Tidak Disetujui Anda"
         "\n\n>`.reset pm_msg`"
-        "\nUsage: Get your remove your Unapproved message"
-        "\n\n*Custom unapproved message currently not able to set"
-        "\nformated text like bold, underline, link, etc."
-        "\nMessage will send in monoscape only"
+        "\nUsage: Dapatkan Anda menghapus pesan Tidak Disetujui Anda"
+        "\n\n*Pesan kustom yang tidak disetujui saat ini tidak dapat disetel"
+        "\nteks yang diformat seperti cetak tebal, garis bawah, tautan, dll."
+        "\nPesan hanya akan dikirim dalam monoscape"
     }
 )
